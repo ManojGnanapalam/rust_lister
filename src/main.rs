@@ -8,7 +8,9 @@ fn main() {
         println!("1. Add Item");
         println!("2. List Items");
         println!("3. Complete Item");
-        println!("4. Exit");
+        println!("4. delete Item");
+
+        println!("5. Exit");
 
         let mut choice = String::new();
 
@@ -29,6 +31,7 @@ fn main() {
             2=>{
                 todo_list.list_items();
             }
+
             3=>{
                 println!("Enter the ID of the completed item:");
                 let mut id = String::new();
@@ -40,9 +43,27 @@ fn main() {
                 todo_list.complete_item(id);
             }
             4=>{
+                if todo_list.items.is_empty(){
+                    println!("The to-do list is empty. No items to delete.");
+                    continue;
+                }else {
+                    todo_list.list_items();
+                }
+                println!("Enter the ID of the item to delete :");
+                let mut id = String::new();
+                io::stdin().read_line(&mut id).expect("Failed to read line");
+                let id: u64 = match id.trim().parse() {
+                    Ok(num) => num,
+                    Err(_) => continue,
+                };
+                todo_list.delete_item(id);
+            }
+
+            5=>{
                 println!("Exiting the program.");
                 break;
             }
+
             _ => {
                 println!("Invalid choice. Please enter a number between 1 and 4.");
             }

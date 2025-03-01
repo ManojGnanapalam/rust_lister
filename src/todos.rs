@@ -1,3 +1,4 @@
+
 pub struct TodoItem{
     pub id: u64,
     pub title: String,
@@ -41,6 +42,24 @@ impl TodoList{
         if let Some(item) = self.items.iter_mut().find(|i| i.id == id){
             item.is_completed = true;
             println!("Completed: {}",item.title);
+        }else{
+            println!("Item with ID {} not found",id);
+        }
+    }
+
+    pub fn delete_item(&mut self, id: u64){
+
+        if self.items.is_empty() {
+            println!("The to-do list is empty. No items to delete.");
+            return;
+        }else {
+            self.list_items();
+        }
+        let index = self.items.iter().position(|i| i.id == id);
+
+        if let Some(index)= index{
+            let removed_item = self.items.remove(index);
+            println!("removed item: {}",removed_item.title);
         }else{
             println!("Item with ID {} not found",id);
         }
